@@ -1,5 +1,5 @@
 package dev.battino.backend.domains.authority;
 
-public class AuthorityService {
+public class AuthoritiesService {
     
 }
