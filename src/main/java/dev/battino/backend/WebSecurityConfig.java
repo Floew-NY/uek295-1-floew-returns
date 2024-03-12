@@ -1,6 +1,5 @@
-package ch.noseryoung.sbdemo02.security;
+package dev.battino.backend;
 
-import ch.noseryoung.sbdemo02.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

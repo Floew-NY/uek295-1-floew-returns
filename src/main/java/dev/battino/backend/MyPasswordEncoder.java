@@ -1,4 +1,4 @@
-package ch.noseryoung.sbdemo02.security;
+package dev.battino.backend;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
