@@ -5,6 +5,7 @@ import org.hibernate.mapping.Set;
 import org.hibernate.validator.constraints.Length;
 
 import dev.battino.backend.domains.roles.Roles;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,11 +23,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @NotNull
-    @Length(min = 3, max = 20)
+    @Length(min = 3, max = 25)
+    @Column(name = "user_name")
     private String name;
-    
+
     @NotNull
+    @Length(min = 8, max = 60)
+    @Column(name = "user_email")
     private String password;
 
     @ManyToOne
