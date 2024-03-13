@@ -25,26 +25,27 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/returns")
-public class ReturnsController {    
+public class ReturnsController {
 
     @Autowired
     private ReturnsService returnsService;
 
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/")
-    public ResponseEntity<String> getAllReturns() {
-        return ResponseEntity.ok().body(returnsService.findAll().toString());
+    public ResponseEntity<List<Returns>> getAllReturns() {
+        return ResponseEntity.ok().body(returnsService.findAll());
     }
 
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/{id}")
     public ResponseEntity<Returns> getReturn(@PathVariable Integer id) {
-            return ResponseEntity.ok().body(returnsService.findById(id));
+        return ResponseEntity.ok().body(returnsService.findById(id));
     }
 
+    @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping("/")
-    public ResponseEntity<Returns> postReturn(@Valid @RequestBody Returns entity, HttpServletRequest request) {
-        Returns savedEntity = returnsService.save(entity);
+    public ResponseEntity<Returns> postReturn(@Valid @RequestBody Returns entity) {
+        Returns savedEntity = returnsService.create(entity);
         return ResponseEntity.created(null).body(savedEntity);
     }
 
