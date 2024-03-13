@@ -21,8 +21,9 @@ import lombok.Setter;
 @Setter
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private Long id;
 
     @NotNull
     @Length(min = 3, max = 25)
@@ -31,7 +32,7 @@ public class User {
 
     @NotNull
     @Length(min = 8, max = 60)
-    @Column(name = "user_email")
+    @Column(name = "user_password")
     private String password;
 
     @ManyToOne
