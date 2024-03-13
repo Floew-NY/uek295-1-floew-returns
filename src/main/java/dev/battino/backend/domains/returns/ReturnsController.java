@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/returns")
@@ -28,7 +29,6 @@ public class ReturnsController {
 
     @Autowired
     private ReturnsService returnsService;
-
 
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/")
@@ -48,4 +48,27 @@ public class ReturnsController {
         return ResponseEntity.created(null).body(savedEntity);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Returns> updateReturn(@PathVariable Integer id, @Valid @RequestBody Returns entity) {
+        Returns returns = returnsService.update(entity, id);
+        return ResponseEntity.ok().body(returns);
+    }
+
+    @PreAuthorize("hasAuthority('DELETE')")
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<String> deleteReturn(@PathVariable Integer id) {
+        returnsService.deleteById(id);
+        return ResponseEntity.ok().body("Return with id " + id + " has been deleted");
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException e) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }
