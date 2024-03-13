@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Returns {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "returns_id")
     private Integer id;
 
