@@ -4,6 +4,7 @@ import dev.battino.backend.domains.authority.Authorities;
 import dev.battino.backend.domains.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +32,7 @@ public class Roles {
     private String name;
 
     @JoinTable(name = "roles_authorities", joinColumns = @JoinColumn(name = "roles_id"), inverseJoinColumns = @JoinColumn(name = "authorities_id"))
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Authorities> authorities;
 
     @OneToMany(mappedBy = "role")
