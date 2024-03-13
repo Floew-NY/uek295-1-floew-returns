@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ReturnsController {    
 
     @Autowired
+    private ReturnsService returnsService;
+
     private ReturnsRepository returnsRepository;
 
     @PreAuthorize("hasAuthority('READ')")
