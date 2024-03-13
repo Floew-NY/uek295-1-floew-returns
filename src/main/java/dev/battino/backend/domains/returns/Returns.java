@@ -9,13 +9,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "returns")
 public class Returns {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "returns_id")
     private Integer id;
 
@@ -26,7 +30,7 @@ public class Returns {
 
     @NotNull
     @Column(name = "returns_amount")
-    private long amount;
+    private double amount;
 
     @NotNull
     @Column(name = "returns_order_id")
