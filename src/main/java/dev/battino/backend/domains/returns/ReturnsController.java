@@ -3,6 +3,7 @@ package dev.battino.backend.domains.returns;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.URIEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,18 +32,21 @@ public class ReturnsController {
     @Autowired
     private ReturnsService returnsService;
 
+    @Operation(description = "Get all returns", summary = "Get all returns")
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/")
     public ResponseEntity<List<Returns>> getAllReturns() {
         return ResponseEntity.ok().body(returnsService.findAll());
     }
 
+    @Operation(description = "Get a return by id", summary = "Get a return")
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/{id}")
     public ResponseEntity<Returns> getReturn(@PathVariable Integer id) {
         return ResponseEntity.ok().body(returnsService.findById(id));
     }
 
+    @Operation(description = "Create a return", summary = "Create a return")
     @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping("/")
     public ResponseEntity<Returns> postReturn(@Valid @RequestBody Returns entity) {
@@ -49,6 +54,7 @@ public class ReturnsController {
         return ResponseEntity.created(null).body(savedEntity);
     }
 
+    @Operation(description = "Update a return by id", summary = "Update a return")
     @PreAuthorize("hasAuthority('UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<Returns> updateReturn(@PathVariable Integer id, @Valid @RequestBody Returns entity) {
@@ -56,8 +62,9 @@ public class ReturnsController {
         return ResponseEntity.ok().body(returns);
     }
 
+    @Operation(description = "Delete a return by id", summary = "Delete a return")
     @PreAuthorize("hasAuthority('DELETE')")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReturn(@PathVariable Integer id) {
         returnsService.deleteById(id);
         return ResponseEntity.ok().body("Return with id " + id + " has been deleted");
