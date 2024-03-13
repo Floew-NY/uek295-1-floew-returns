@@ -17,14 +17,13 @@ public class ReturnsService {
     }
 
     public Returns create(Returns returns) {
-        if (returnsRepository.findById(returns.getId()) != null)
-            throw new IllegalArgumentException("Return with id " + returns.getId() + " already exists");
+
+        returns.setId(null);
         return returnsRepository.save(returns);
     }
 
     public Returns update(Returns entity, Integer id) {
-        if (returnsRepository.findById(id) == null)
-            throw new NoSuchElementException("Return with id " + id + " does not exist");
+        returnsRepository.findById(id).orElseThrow();
         entity.setId(id);
         return returnsRepository.save(entity);
     }
@@ -34,6 +33,8 @@ public class ReturnsService {
     }
 
     public void deleteById(Integer id) {
+        if (returnsRepository.findById(id) == null)
+            throw new NoSuchElementException("Return with id " + id + " does not exist");
         returnsRepository.deleteById(id);
     }
 }
