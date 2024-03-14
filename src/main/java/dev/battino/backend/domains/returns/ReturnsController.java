@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -79,8 +80,8 @@ public class ReturnsController {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Invalid request method");
     }
 
-    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleMethodArgumentNotValidException(org.springframework.web.bind.MethodArgumentNotValidException e) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         return ResponseEntity.badRequest().body(e.getBindingResult().getFieldError().getField() + " is invalid: " + e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
