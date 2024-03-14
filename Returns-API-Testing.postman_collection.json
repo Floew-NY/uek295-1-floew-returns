@@ -140,17 +140,23 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"Responce Array contains Valid object\", function () {",
+							"pm.test(\"Response Array contains Valid object\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    var id = pm.collectionVariables.get(\"id\");",
-							"    pm.expect(jsonData).to.contains({",
-							"    \"id\": id ,",
-							"    \"reason\": \"Great\",",
-							"    \"amount\": 323.3,",
-							"    \"orderId\": 5433",
-							"});",
-							"});",
-							""
+							"    var expectedObject = {",
+							"        \"id\": id,",
+							"        \"reason\": \"Great\",",
+							"        \"amount\": 323.3,",
+							"        \"orderId\": 5433",
+							"    };",
+							"",
+							"    var found = jsonData.some(function(item) {",
+							"        return Object.keys(expectedObject).every(function(key) {",
+							"            return item[key] === expectedObject[key];",
+							"        });",
+							"    });",
+							"    pm.expect(found).to.be.true; ",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -175,14 +181,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/returns/{{id}}",
+					"raw": "localhost:8080/returns/",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"returns",
-						"{{id}}"
+						""
 					]
 				}
 			},
