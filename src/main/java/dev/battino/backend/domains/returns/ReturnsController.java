@@ -93,7 +93,7 @@ public class ReturnsController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-        return ResponseEntity.badRequest().body(e.getCause().toString());
+        return ResponseEntity.badRequest().body(e.getCause().getMessage());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
