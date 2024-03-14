@@ -15,6 +15,8 @@ import org.springframework.beans.propertyeditors.URIEditor;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -76,15 +78,16 @@ public class ReturnsController {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<String> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public ResponseEntity<String> handleHttpRequestMethodNotSupportedException(
+            HttpRequestMethodNotSupportedException e) {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("Invalid request method");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return ResponseEntity.badRequest().body(e.getBindingResult().getFieldError().getField() + " is invalid: " + e.getBindingResult().getFieldError().getDefaultMessage());
+        return ResponseEntity.badRequest().body(e.getBindingResult().getFieldError().getField() + " is invalid: "
+                + e.getBindingResult().getFieldError().getDefaultMessage());
     }
-
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException e) {
@@ -99,12 +102,17 @@ public class ReturnsController {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("Data integrity violation: " + e.getCause().getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body("Data integrity violation: " + e.getCause().getMessage());
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e) {
-        String errorMessage = "An error occurred.";
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        return ResponseEntity.badRequest().body("Invalid request body: " + e.getCause().getMessage());
     }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+
 }
