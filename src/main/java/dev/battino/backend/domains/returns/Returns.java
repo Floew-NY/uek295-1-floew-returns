@@ -1,6 +1,5 @@
 package dev.battino.backend.domains.returns;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "returns")
 public class Returns {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "returns_id")

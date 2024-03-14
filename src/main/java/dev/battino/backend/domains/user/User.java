@@ -1,7 +1,5 @@
 package dev.battino.backend.domains.user;
 
-
-import org.hibernate.mapping.Set;
 import org.hibernate.validator.constraints.Length;
 
 import dev.battino.backend.domains.roles.Roles;
@@ -11,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

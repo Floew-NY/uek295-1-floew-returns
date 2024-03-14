@@ -1,4 +1,5 @@
 package dev.battino.backend.domains.authority;
+
 import java.util.Set;
 
 import dev.battino.backend.domains.roles.Roles;
@@ -17,7 +18,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "authorities")
 public class Authorities {
-
 
     @Id
     @Column(name = "authorities_id")

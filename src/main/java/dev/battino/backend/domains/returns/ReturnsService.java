@@ -33,7 +33,8 @@ public class ReturnsService {
     }
 
     public void deleteById(Integer id) {
-        returnsRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Return with id " + id + " does not exist"));
+        returnsRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Return with id " + id + " does not exist"));
         returnsRepository.deleteById(id);
     }
 }

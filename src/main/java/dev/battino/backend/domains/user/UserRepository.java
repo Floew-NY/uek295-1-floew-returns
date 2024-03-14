@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByName(String name); // Spring Boot (Hibernate) Magic: Based on the method name, a usable SQL query gets generated
+    Optional<User> findByName(String name); // Spring Boot (Hibernate) Magic: Based on the method name, a usable SQL
+                                            // query gets generated
 }

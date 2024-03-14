@@ -12,6 +12,7 @@ public class MyPasswordEncoder {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance(); // For developement use only: Don't encode passwords in database
-		// return new BCryptPasswordEncoder();    // Real world example: Encode (hash) passwords using BCrypt
+        // return new BCryptPasswordEncoder(); // Real world example: Encode (hash)
+        // passwords using BCrypt
     }
 }
